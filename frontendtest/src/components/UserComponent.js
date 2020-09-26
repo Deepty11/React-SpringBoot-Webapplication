@@ -10,6 +10,18 @@ class UserComponent extends Component{
 
         }
         this.addUser=this.addUser.bind(this);
+        this.editUser=this.editUser.bind(this);
+        this.deleteUser=this.deleteUser.bind(this);
+    }
+    editUser(id){
+        this.props.history.push(`/updateUser/${id}`);
+
+    }
+    deleteUser(id){
+        UserService.deleteUser(id).then((res)=>{
+            this.props.history.push("/users");
+        });
+
     }
     addUser(){
         this.props.history.push("/addUser");
@@ -31,6 +43,8 @@ class UserComponent extends Component{
                             <td>First Name</td>
                             <td>Last Name</td>
                             <td>Username</td>
+                            <td>Update</td>
+                            <td>Delete</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +57,13 @@ class UserComponent extends Component{
                                         <td>{user.firstName}</td>
                                         <td>{user.lastName}</td>
                                         <td>{user.username}</td>
+                                        <td>
+                                            <button onClick={()=>{this.editUser(user.id)}} 
+                                                    className="btn btn-info">Update</button>
+                                        </td>
+                                        <td><button onClick={()=>{this.deleteUser(user.id)}} 
+                                                    className="btn btn-info">Delete</button>
+                                        </td>
                                     </tr>
 
                             )
